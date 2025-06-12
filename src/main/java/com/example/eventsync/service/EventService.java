@@ -21,11 +21,11 @@ public class EventService {
     @PostConstruct
     public void seedEvents() {
         if (eventRepository.count() == 0) {
-            eventRepository.save(new Event(1L, "hackathon", "event for programmers"));
-            eventRepository.save(new Event(2L, "marathon", "event for athletes"));
-            eventRepository.save(new Event(3L, "shopping", "event for wives"));
-            eventRepository.save(new Event(4L, "weightlifting", "event for powerlifters"));
-            eventRepository.save(new Event(5L, "painting", "event for artists"));
+            eventRepository.save(new Event("hackathon", "event for programmers"));
+            eventRepository.save(new Event("marathon", "event for athletes"));
+            eventRepository.save(new Event("shopping", "event for wives"));
+            eventRepository.save(new Event("weightlifting", "event for powerlifters"));
+            eventRepository.save(new Event("painting", "event for artists"));
         }
     }
 
@@ -35,5 +35,9 @@ public class EventService {
 
     public List<Event> getAllEvents(){
         return eventRepository.findAll();
+    }
+
+    public void addEvent(Event event){
+        eventRepository.save(event);
     }
 }

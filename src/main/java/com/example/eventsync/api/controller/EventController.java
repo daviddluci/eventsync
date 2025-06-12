@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.eventsync.api.model.Event;
 import com.example.eventsync.service.EventService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @RestController
@@ -20,7 +23,7 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @GetMapping("events")
+    @GetMapping("/events")
     public List<Event> getEvents() {
         return eventService.getAllEvents();
     }
@@ -30,5 +33,11 @@ public class EventController {
         return eventService.getEvent(id).orElse(new Event(0, null, null));
     }
 
+    @PostMapping("/events")
+    public Event addEvent(@RequestBody Event event) {        
+        eventService.addEvent(event);
+        return event;
+    }
+    
     
 }
