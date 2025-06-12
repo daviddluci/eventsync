@@ -3,6 +3,7 @@ package com.example.eventsync.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,9 +30,12 @@ public class EventController {
     }
 
     @GetMapping("/events/{id}/summary")
-    public Event getEvent(@PathVariable Long id) {
-        return eventService.getEvent(id).orElse(new Event(0, null, null));
+    public ResponseEntity<Event> getEvent(@PathVariable Long id) {
+        return eventService.getEvent(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
 
     @PostMapping("/events")
     public Event addEvent(@RequestBody Event event) {        
