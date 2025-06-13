@@ -1,5 +1,9 @@
 package com.example.eventsync.api.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,12 +16,17 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String title;
     private String description;
+
+    @ElementCollection
+    private List<Feedback> feedbacks;
 
     public Event(String title, String description){
         this.title = title;
         this.description = description;
+        feedbacks = new ArrayList<>();
     }
 
     protected Event(){}
@@ -44,5 +53,13 @@ public class Event {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void addFeedback(String text){
+        feedbacks.add(new Feedback(text));
+    }
+
+    public List<Feedback> getFeedbacksCopy(){
+        return List.copyOf(feedbacks);
     }
 }
