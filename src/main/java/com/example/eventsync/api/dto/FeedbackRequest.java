@@ -1,5 +1,9 @@
 package com.example.eventsync.api.dto;
 
+
+/**
+ * Data transfer object used to receive feedback text in a JSON request body.
+ */
 public class FeedbackRequest {
     private String text;
 

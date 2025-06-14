@@ -7,6 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class EventSyncApplication {
 
 	public static void main(String[] args) {
+		/**
+		 * Application's entry point.
+		 */
 		SpringApplication.run(EventSyncApplication.class, args);
 	}
 

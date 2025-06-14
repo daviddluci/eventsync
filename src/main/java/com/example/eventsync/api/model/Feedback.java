@@ -4,6 +4,10 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Embeddable;
 
+/**
+ * Represents a single feedback entry associated with an event
+ * Contains the feedback text, sentiment classification and the submission timestamp.
+ */
 @Embeddable
 public class Feedback {
     private String text;
@@ -12,6 +16,14 @@ public class Feedback {
 
     protected Feedback() {}
 
+
+    /**
+     * Constructs a Feedback specified with text and sentiment classification
+     * Submission time is determined automatically to the current time
+     * 
+     * @param text
+     * @param sentiment
+     */
     public Feedback(String text, String sentiment){
         this.text = text;
         this.sentiment = sentiment;

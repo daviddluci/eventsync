@@ -13,6 +13,11 @@ import com.example.eventsync.api.dto.SentimentScore;
 import com.example.eventsync.api.model.Event;
 import com.example.eventsync.repository.EventRepository;
 
+
+/**
+ * Service class handling event logic including sentiment analysis
+ * via the huggingfaceAPI.
+ */
 @Service
 public class EventService {
     private final EventRepository eventRepository;
@@ -24,18 +29,15 @@ public class EventService {
         this.eventRepository = eventRepository;
     }
 
-    public Optional<Event> getEvent(Long id){
-        return eventRepository.findById(id);
-    }
 
-    public List<Event> getAllEvents(){
-        return eventRepository.findAll();
-    }
-    
-    public void addEvent(Event event){
-        eventRepository.save(event);
-    }
-
+    /**
+     * Adds user feedback to the event specified by id, performs
+     * sentiment analysis on the feedback text, and updates event feedback with sentiment stats.
+     * 
+     * @param id ID of event to which feedback should be added
+     * @param text text submitted by the user
+     * @return true if event exists and feedback is added, false otherwise
+     */
     public boolean submitFeedback(Long id, String text) {
         Optional<Event> eventOpt = eventRepository.findById(id);
         if (eventOpt.isEmpty()) {
@@ -51,6 +53,13 @@ public class EventService {
     }
 
 
+    /**
+     * Calls huggingfaceAPI to analyze sentiment of the given text
+     * Returns a SentimentResponse instance containing sentiment labels and scores.
+     * 
+     * @param text text to analyze
+     * @return SentimentResponse with the detected sentiment label or empty result on error
+     */
     private SentimentResponse analyzeSentiment(String text) {
         String url = "https://router.huggingface.co/hf-inference/models/cardiffnlp/twitter-roberta-base-sentiment";
 
@@ -80,5 +89,22 @@ public class EventService {
             System.err.println("E: error calling huggingface api");
             return new SentimentResponse(List.of());
         }
+    }
+
+
+    /**
+     * Saves a new event to the repository.
+     * @param event
+     */
+    public void addEvent(Event event){
+        eventRepository.save(event);
+    }
+
+    public Optional<Event> getEvent(Long id){
+        return eventRepository.findById(id);
+    }
+
+    public List<Event> getAllEvents(){
+        return eventRepository.findAll();
     }
 }

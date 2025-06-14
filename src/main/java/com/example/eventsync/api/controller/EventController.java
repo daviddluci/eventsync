@@ -25,17 +25,38 @@ public class EventController {
         this.eventService = eventService;
     }
 
+
+    /**
+     * Adds a new event.
+     * 
+     * @param event the event to add
+     * @return ResponsiveEntity with HTTP status code 200(OK)
+     */
     @PostMapping("/events")
-    public Event addEvent(@RequestBody Event event) {        
+    public ResponseEntity<Void> addEvent(@RequestBody Event event) {        
         eventService.addEvent(event);
-        return event;
+        return ResponseEntity.ok().build();
     }
 
+
+    /**
+     * Returns JSON with all events.
+     * 
+     * @return
+     */
     @GetMapping("/events")
     public List<Event> getEvents() {
         return eventService.getAllEvents();
     }
 
+
+    /**
+     * Submit a feedback to specific event identified by its id.
+     * 
+     * @param id ID of an event for which feedback is submitted
+     * @param feedbackRequest the feedback details from the request body
+     * @return ResponsiveEntity with HTTP status code 200(OK) if event and feedback is submitted successfully, or 404 (Not Found) otherwise.
+     */
     @PostMapping("/events/{id}/feedback")
     public ResponseEntity<Void> submitFeedback(@PathVariable Long id, @RequestBody FeedbackRequest feedbackRequest) {
         boolean success = eventService.submitFeedback(id, feedbackRequest.getText());
@@ -46,12 +67,20 @@ public class EventController {
         }
     }
 
+
+    /**
+     * Returns a summary of an event identified by its ID.
+     * The summary includes sentiment breakdown and feedback details.
+     * 
+     * @param id ID of an event for summary is requested
+     * @return ResponseEntity containing the event summary as JSON with HTTP status 200 (OK),
+     *         or HTTP status 404 (Not Found) if the event does not exist
+     */
     @GetMapping("/events/{id}/summary")
     public ResponseEntity<Event> getEvent(@PathVariable Long id) {
         return eventService.getEvent(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-    
     
 }

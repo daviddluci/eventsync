@@ -2,6 +2,11 @@ package com.example.eventsync.api.model;
 
 import jakarta.persistence.Embeddable;
 
+
+/**
+ * Represents sentiment statistics for feedback associated with an event.
+ * Tracks counts for positive, neutral, negative, and unrecognized feedback entries.
+ */
 @Embeddable
 public class SentimentStats {
     private Long positiveCount;
@@ -9,6 +14,10 @@ public class SentimentStats {
     private Long negativeCount; 
     private Long unrecognizedCount;
 
+    
+    /**
+     * Constructs a new SentimentStats instance with all counts initialized to zero.
+     */
     public SentimentStats () {
         positiveCount = 0L;
         neutralCount = 0L;

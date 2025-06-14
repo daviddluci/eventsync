@@ -10,6 +10,11 @@ import com.example.eventsync.service.EventService;
 
 import jakarta.transaction.Transactional;
 
+
+/**
+ * Seeds the database with initial event data and sample feedback
+ * after the application is ready.
+ */
 @Component
 public class DatabaseSeeder {
     private final EventRepository eventRepository;
@@ -20,6 +25,10 @@ public class DatabaseSeeder {
         this.eventService = eventService;
     }
 
+
+    /**
+     * Seeds the database with a set of predefined events and feedbacks
+     */
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void seedEvents() {

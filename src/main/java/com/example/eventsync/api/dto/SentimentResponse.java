@@ -2,6 +2,9 @@ package com.example.eventsync.api.dto;
 
 import java.util.List;
 
+/**
+ * Data transfer object used to represent sentiment response structure.
+ */
 public class SentimentResponse {
     
     private List<List<SentimentScore>> scores;
