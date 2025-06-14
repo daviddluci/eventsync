@@ -37,13 +37,14 @@ public class EventController {
     }
 
     @PostMapping("/events/{id}/feedback")
-    public ResponseEntity<Event> submitFeedback(@PathVariable Long id,@RequestBody FeedbackRequest feedbackRequest) {
-        eventService.submitFeedback(id, feedbackRequest.getText());
-        return eventService.getEvent(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Void> submitFeedback(@PathVariable Long id, @RequestBody FeedbackRequest feedbackRequest) {
+        boolean success = eventService.submitFeedback(id, feedbackRequest.getText());
+        if (success) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-    
 
     @GetMapping("/events/{id}/summary")
     public ResponseEntity<Event> getEvent(@PathVariable Long id) {
