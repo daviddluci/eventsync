@@ -12,8 +12,9 @@ public class Feedback {
 
     protected Feedback() {}
 
-    public Feedback(String text){
+    public Feedback(String text, String sentiment){
         this.text = text;
+        this.sentiment = sentiment;
         this.submittedAt = LocalDateTime.now();
     }
 
