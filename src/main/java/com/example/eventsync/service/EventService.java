@@ -36,15 +36,20 @@ public class EventService {
         eventRepository.save(event);
     }
 
-    public void submitFeedback(Long id, String text){
-        Event event = eventRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Event not found with id: " + id));
-        
+    public boolean submitFeedback(Long id, String text) {
+        Optional<Event> eventOpt = eventRepository.findById(id);
+        if (eventOpt.isEmpty()) {
+            return false;
+        }
+
+        Event event = eventOpt.get();
         SentimentResponse sentiment = analyzeSentiment(text);
         event.addFeedback(text, sentiment.getLabel());
-        
+
         eventRepository.save(event);
+        return true;
     }
+
 
     private SentimentResponse analyzeSentiment(String text) {
         String url = "https://router.huggingface.co/hf-inference/models/cardiffnlp/twitter-roberta-base-sentiment";
