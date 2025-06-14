@@ -13,8 +13,6 @@ import com.example.eventsync.api.dto.SentimentScore;
 import com.example.eventsync.api.model.Event;
 import com.example.eventsync.repository.EventRepository;
 
-import jakarta.annotation.PostConstruct;
-
 @Service
 public class EventService {
     private final EventRepository eventRepository;
@@ -24,17 +22,6 @@ public class EventService {
 
     public EventService(EventRepository eventRepository){
         this.eventRepository = eventRepository;
-    }
-
-    @PostConstruct
-    public void seedEvents() {
-        if (eventRepository.count() == 0) {
-            eventRepository.save(new Event("hackathon", "event for programmers"));
-            eventRepository.save(new Event("marathon", "event for athletes"));
-            eventRepository.save(new Event("shopping", "event for wives"));
-            eventRepository.save(new Event("weightlifting", "event for powerlifters"));
-            eventRepository.save(new Event("painting", "event for artists"));
-        }
     }
 
     public Optional<Event> getEvent(Long id){
@@ -53,14 +40,10 @@ public class EventService {
         Event event = eventRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Event not found with id: " + id));
         
-        event.addFeedback(text);
-        eventRepository.save(event);
         SentimentResponse sentiment = analyzeSentiment(text);
-        for (List<SentimentScore> l : sentiment.getScores()){
-            for (SentimentScore s : l){
-                System.out.println(s.getLabel() + " " + s.getScore());
-            }
-        }
+        event.addFeedback(text, sentiment.getLabel());
+        
+        eventRepository.save(event);
     }
 
     private SentimentResponse analyzeSentiment(String text) {
@@ -70,18 +53,27 @@ public class EventService {
 
         String requestBody = "{ \"inputs\": \"" + text.replace("\"", "\\\"") + "\" }";
 
-        List<List<SentimentScore>> sentimentScores = builder.build()
-            .post()
-            .uri(url)
-            .header("Authorization", "Bearer " + huggingfaceApiKey)
-            .header("Content-Type", "application/json")
-            .bodyValue(requestBody)
-            .retrieve()
-            .bodyToMono(new ParameterizedTypeReference<List<List<SentimentScore>>>() {})
-            .block();
+        try{
+            List<List<SentimentScore>> sentimentScores = builder.build()
+                .post()
+                .uri(url)
+                .header("Authorization", "Bearer " + huggingfaceApiKey)
+                .header("Content-Type", "application/json")
+                .bodyValue(requestBody)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<List<List<SentimentScore>>>() {})
+                .block();
 
-        SentimentResponse sentiment = new SentimentResponse(sentimentScores);
+            if (sentimentScores == null || sentimentScores.isEmpty()){
+                System.err.println("W: empty huggingface api yield");
+                return new SentimentResponse(null);
+            }
 
-        return sentiment;
+            return new SentimentResponse(sentimentScores);
+
+        } catch (Exception e){
+            System.err.println("E: error calling huggingface api");
+            return new SentimentResponse(List.of());
+        }
     }
 }
