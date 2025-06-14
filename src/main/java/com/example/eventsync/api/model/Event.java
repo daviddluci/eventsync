@@ -37,7 +37,11 @@ public class Event {
         feedbacks = new ArrayList<>();
     }
 
-    protected Event(){}
+    protected Event(){
+        this.feedbacks = new ArrayList<>();
+        this.feedbackSentimentStats = new SentimentStats();
+    }
+
 
     public long getId() {
         return id;

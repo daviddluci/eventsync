@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>eventsync</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>EventSync</name>
 	<description>Backend for event management and sentiment analysis</description>
 	<url/>
