@@ -10,6 +10,7 @@ export const StarBackground = () => {
 
         const handleResize = () => {
             generateStars();
+            generateMeteors();
         };
 
         window.addEventListener('resize', handleResize)
