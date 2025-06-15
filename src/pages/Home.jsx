@@ -1,4 +1,4 @@
-import { StarBackground } from "../components/Starbackground";
+import { StarBackground } from "../components/StarBackground";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { Navbar } from "../components/Navbar";
 import { Welcome } from "../components/Welcome";
