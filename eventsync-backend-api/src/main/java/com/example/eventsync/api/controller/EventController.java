@@ -29,6 +29,12 @@ public class EventController {
     /**
      * Adds a new event.
      * 
+     * This endpoint accepts a JSON request body with the following structure:
+     * {
+     *      "title" : "Your event title"
+     *      "description" : "Your event description"
+     * }
+     * 
      * @param event the event to add
      * @return ResponsiveEntity with HTTP status code 200(OK)
      */
@@ -52,6 +58,11 @@ public class EventController {
 
     /**
      * Submit a feedback to specific event identified by its id.
+     * 
+     * This endpoints accepts a JSON request body with the following structure
+     * {
+     *      "text" : "feedback message"
+     * }
      * 
      * @param id ID of an event for which feedback is submitted
      * @param feedbackRequest the feedback details from the request body
