@@ -1,0 +1,93 @@
+# EventSync
+
+EventSync is a Spring Boot REST API application that allows users to create and view events, submit feedback, and analyze the sentiment of submitted feedback using an external AI sentiment analysis API.
+
+## Features
+
+- Create new event
+- List all events
+- Submit feedback for an event
+- Return sentiment breakdown for the event (positive, etc..)
+
+## Technologies
+
+- Java 17+
+- Spring Boot
+- Spring Web
+- Spring JPA
+- H2 (in-memory database)
+- HuggingFaceAPI Sentiment Analysis Model (cardiffnlp/twitter-roberta-base-sentiment)
+
+## Getting Started
+
+### Must-haves
+
+- Java 17+
+- Maven
+- Docker
+- API key for sentiment analysis provider (One is provided for demo purpose)
+
+### Installation
+
+1. Clone the repository:
+
+```powershell
+git clone https://github.com/daviddluci/eventsync.git
+cd eventsync/eventsync-backend-api
+```
+
+2. (Optional) Set the environment variable for the sentiment analysis API key, or leave the one provided:
+
+src\main\resources\application.properties <-- huggingface.api.key=   <--Add you environment variable here.
+
+3. Build the project using Maven:
+
+```powershell
+mvn clean package
+```
+
+4. Run the application:
+
+```powershell
+java -jar target/eventsync-1.0.0.jar
+```
+
+Alternatively, run it directly through Maven:
+
+```powershell
+mvn spring-boot:run
+```
+
+## Build Docker Image
+
+## If you want to run the application using Docker, build and run it with:
+
+### Docker file is already provided in repository.
+
+1. Build Docker Image
+
+```powershell
+docker build -t eventsync-backend .
+```
+
+2. Run Docker Image
+
+```powershell
+docker run -p 8080:8080 eventsync-backend
+```
+
+## All set!
+
+### API now should be accessible on
+
+### http://localhost:8080
+
+### Available Endpoints:
+
+- http://localhost:8080/events  <-- POST – create new event
+
+- http://localhost:8080/events  <-- GET – list all events
+
+- http://localhost:8080/events/{eventId}/feedback <-- POST – submit feedback for an event
+
+- http://localhost:8080/events/{eventId}/summary <-- GET – return sentiment breakdown for the event
