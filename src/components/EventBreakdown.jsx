@@ -20,7 +20,7 @@ export const EventBreakdown = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-        const response = await fetch(`https://eventsync-latest.onrender.com/events/${formData.id}/summary`, {
+        const response = await fetch(`https://eventsync-final.onrender.com/events/${formData.id}/summary`, {
         method: "GET"
         });
 
@@ -87,6 +87,7 @@ export const EventBreakdown = () => {
             <div className="text-left mb-4">
               <h3 className="font-semibold text-base break-words">{event?.description || "No event selected"}</h3>
             </div>
+            <span className="font-bold text-primary text-lg text-center max-w-xs mx-auto">Sentiment Analysis</span>
             <div className="flex justify-center">
                 <FeedbackCircle
                 data={[

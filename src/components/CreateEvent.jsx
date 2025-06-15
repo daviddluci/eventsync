@@ -16,7 +16,7 @@ setTimeout(() => {
   
 }, 1000);
   try {
-    const response = await fetch("https://eventsync-latest.onrender.com/events", {
+    const response = await fetch("https://eventsync-final.onrender.com/events", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
