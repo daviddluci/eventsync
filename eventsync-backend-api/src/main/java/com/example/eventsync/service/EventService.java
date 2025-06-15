@@ -22,7 +22,7 @@ import com.example.eventsync.repository.EventRepository;
 public class EventService {
     private final EventRepository eventRepository;
 
-    @Value("${huggingface.api.key}")
+    @Value("${huggingface.api.key}") // huggingface.api.key=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 -- For testing purposes since it is only a demo.
     private String huggingfaceApiKey;
 
     public EventService(EventRepository eventRepository){
