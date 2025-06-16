@@ -59,7 +59,7 @@ export const EventsList = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-15 px-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-15 px-5 md:px-15">
         {events.map((event, key) => (
           <div key={key} className="bg-card p-6 rounded-lg shadow-xs card-hover">
             <div className="flex items-center justify-center mb-4">
