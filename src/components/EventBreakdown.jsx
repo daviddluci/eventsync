@@ -20,7 +20,7 @@ export const EventBreakdown = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-        const response = await fetch(`https://eventsync-final.onrender.com/events/${formData.id}/summary`, {
+        const response = await fetch(`https://eventsync-final.onrender.com/events/${Math.round(formData.id)}/summary`, {
         method: "GET"
         });
 

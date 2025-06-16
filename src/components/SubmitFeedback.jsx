@@ -13,7 +13,7 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   setIsSubmitting(true);
   try {
-    const response = await fetch(`https://eventsync-final.onrender.com/events/${formData.id}/feedback`, {
+    const response = await fetch(`https://eventsync-final.onrender.com/events/${Math.round(formData.id)}/feedback`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
