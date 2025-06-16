@@ -49,7 +49,7 @@ export const EventsList = () => {
   }
   
   return (
-    <section id="listEvents" className="py-24 px-7 relative bg-secondary/30">
+    <section id="listEvents" className="py-24 px-7 relative bg-secondary/30 min-h-screen">
       <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
           All <span className="text-primary"> events</span>
@@ -59,11 +59,11 @@ export const EventsList = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-15 px-30">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-15 px-10">
         {events.map((event, key) => (
           <div key={key} className="bg-card p-6 rounded-lg shadow-xs card-hover">
-            <div className="flex items-center justify-center mb-4 relative">
-              <span className="absolute left-0 w-8 h-8 flex items-center justify-center border-2 border-primary rounded-full text-sm font-bold opacity-60">{event.id}</span>
+            <div className="flex items-center justify-center mb-4">
+              <span className="left-0 w-8 h-8 min-w-8 min-h-8 flex items-center justify-center border-2 border-primary rounded-full text-sm font-bold opacity-60">{event.id}</span>
               <span className="font-bold text-lg text-center max-w-xs mx-auto">{event.title}</span>
             </div>
             <div className="text-left mb-4">
